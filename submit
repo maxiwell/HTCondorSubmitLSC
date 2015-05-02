@@ -1,0 +1,143 @@
+# The LSC Submit file
+
+##########################################################################
+# Specify the HTCondor Universe (vanilla is the default and is used
+#  for almost all jobs) AND the desired name of the HTCondor log file.
+#  Wherever you see $(Cluster), HTCondor will insert the queue number
+#  assigned to this set of jobs at the time of submission.
+
+universe = vanilla
+
+##########################################################################
+# Do you need that you job use the same enviroments variables from current
+# session? (Avoid)
+
+# getenv = True
+
+##########################################################################
+# Specify your executable (single binary or a script that runs several
+#  commands), arguments, and a files for HTCondor to store standard
+#  output (or "screen output").
+#  $(Process) will be a integer number for each job, starting with "0"
+#  and increasing for the relevant number of jobs.
+# RENAME THE example.sh to any more descritive!
+
+executable = example.sh
+arguments = $(Cluster) $(Process)
+
+input   =
+output  = example.$(Cluster).$(Process).out
+error   = example.$(Cluster).$(Process).err                                                                                     
+log     = example.$(Cluster).log   
+
+##########################################################################
+# YOU LOST PERFORMANCE AND DEGRADES THE NFS if do not use this
+# Specify that HTCondor should transfer files to and from the
+#  computer where each job runs. The last of these lines *would* be
+#  used if there were any other files needed for the executable to run.
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_input_files = ./bla
+
+##########################################################################
+# Do you want run at specific machine? (Avoid)
+# See http://http.lsc.ic.unicamp.br/~lsc/desc/
+
+# requirements = ((Machine == "n01.lsc.ic.unicamp.br") || (Machine == "n02.lsc.ic.unicamp.br") || (Machine == "n03.lsc.ic.unicamp.br") || (Machine == "n04.lsc.ic.unicamp.br"))
+
+# eg. "condor_q -run"
+# 25307.0   tiago.falcao    5/2  11:51   0+00:00:20 slot1@w01.lsc.ic.unicamp.br
+# 25307.1   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n08.lsc.ic.unicamp.br
+# 25307.2   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n02.lsc.ic.unicamp.br
+# 25307.3   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n04.lsc.ic.unicamp.br
+# 25307.4   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n11.lsc.ic.unicamp.br
+# 25307.5   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n16.lsc.ic.unicamp.br
+# 25307.6   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n17.lsc.ic.unicamp.br
+# 25307.7   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n06.lsc.ic.unicamp.br
+# 25307.8   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n07.lsc.ic.unicamp.br
+# 25307.9   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n13.lsc.ic.unicamp.br
+# OR
+# 25308.0   tiago.falcao    5/2  11:55   0+00:00:02 slot1@n02.lsc.ic.unicamp.br
+# 25308.1   tiago.falcao    5/2  11:55   0+00:00:02 slot1@n04.lsc.ic.unicamp.br
+# 25308.2   tiago.falcao    5/2  11:55   0+00:00:02 slot1_1@n01.lsc.ic.unicamp.br
+# 25308.3   tiago.falcao    5/2  11:55   0+00:00:02 slot1_2@n01.lsc.ic.unicamp.br
+# 25308.4   tiago.falcao    5/2  11:55   0+00:00:01 slot1_3@n01.lsc.ic.unicamp.br
+# 25308.5   tiago.falcao    5/2  11:55   0+00:00:01 slot1_4@n01.lsc.ic.unicamp.br
+# 25308.6   tiago.falcao    5/2  11:55   0+00:00:01 slot1_3@n02.lsc.ic.unicamp.br
+# 25308.7   tiago.falcao    5/2  11:55   0+00:00:01 slot1_4@n02.lsc.ic.unicamp.br
+# 25308.8   tiago.falcao    5/2  11:55   0+00:00:01 slot1_2@n04.lsc.ic.unicamp.br
+# 25308.9   tiago.falcao    5/2  11:55   0+00:00:01 slot1_4@n04.lsc.ic.unicamp.br
+
+
+##########################################################################
+# Do you NEED run alone in the machine? (Avoid)
+# If actually need this, use with specific machine
+
+# +RequiresWholeMachine = True
+# requirements          = (Target.CAN_RUN_WHOLE_MACHINE =?= True) && $(requirements)
+
+# eg. "condor_q -run"
+# 25307.0   tiago.falcao    5/2  11:51   0+00:00:20 slot1@w01.lsc.ic.unicamp.br
+# 25307.1   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n08.lsc.ic.unicamp.br
+# 25307.2   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n02.lsc.ic.unicamp.br
+# 25307.3   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n04.lsc.ic.unicamp.br
+# 25307.4   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n11.lsc.ic.unicamp.br
+# 25307.5   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n16.lsc.ic.unicamp.br
+# 25307.6   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n17.lsc.ic.unicamp.br
+# 25307.7   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n06.lsc.ic.unicamp.br
+# 25307.8   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n07.lsc.ic.unicamp.br
+# 25307.9   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n13.lsc.ic.unicamp.br
+# OR
+# 25310.0   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n02.lsc.ic.unicamp.br
+# 25310.1   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n04.lsc.ic.unicamp.br
+# 25310.2   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n01.lsc.ic.unicamp.br
+
+##########################################################################
+# How many cores you want use?
+# In future will hard limit this resource, now all threads run in all cores
+
+request_cpus = 1
+
+##########################################################################
+# Memory is in MBs
+# HoldReasonSubCode of 26 means SYSTEM_PERIODIC_HOLD became true,
+# and HoldReasonSubCode of 1 is configured in condor_config to mean
+# job was put on hold due to memory usage.
+
+periodic_release = HoldReasonCode =?= 26 && HoldReasonSubCode =?= 1
+
+# Request 256 MB ram unless MemoryUsage (from a previous run) is
+# already defined, in which case triple it for the next try.
+
+request_memory = ifthenelse(isUndefined(MemoryUsage),256,3*MemoryUsage)
+
+##########################################################################
+# Disk space is in KBs
+
+request_disk = 1000000
+
+##########################################################################
+# Preferences
+# Rank  = Disk && (Memory >= 4096)
+
+##########################################################################
+# Tell HTCondor to run N instances of our job
+# They will have <cluster>.<process> code in condor_q
+# I suggest that your script recognize the process number
+# * To run same instances of one execution
+# * To run each binary from same benchmark
+queue 10
+
+# eg. "condor_q"
+# 25307.0   tiago.falcao    5/2  11:51   0+00:00:04 R  0   0.0  example.sh 25307 0
+# 25307.1   tiago.falcao    5/2  11:51   0+00:00:04 R  0   0.0  example.sh 25307 1
+# 25307.2   tiago.falcao    5/2  11:51   0+00:00:04 R  0   0.0  example.sh 25307 2
+# 25307.3   tiago.falcao    5/2  11:51   0+00:00:03 R  0   0.0  example.sh 25307 3
+# 25307.4   tiago.falcao    5/2  11:51   0+00:00:03 R  0   0.0  example.sh 25307 4
+# 25307.5   tiago.falcao    5/2  11:51   0+00:00:03 R  0   0.0  example.sh 25307 5
+# 25307.6   tiago.falcao    5/2  11:51   0+00:00:03 R  0   0.0  example.sh 25307 6
+# 25307.7   tiago.falcao    5/2  11:51   0+00:00:03 R  0   0.0  example.sh 25307 7
+# 25307.8   tiago.falcao    5/2  11:51   0+00:00:02 R  0   0.0  example.sh 25307 8
+# 25307.9   tiago.falcao    5/2  11:51   0+00:00:02 R  0   0.0  example.sh 25307 9
+
