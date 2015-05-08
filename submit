@@ -47,17 +47,6 @@ transfer_input_files = ./bla
 # requirements = ((Machine == "n01.lsc.ic.unicamp.br") || (Machine == "n02.lsc.ic.unicamp.br") || (Machine == "n03.lsc.ic.unicamp.br") || (Machine == "n04.lsc.ic.unicamp.br"))
 
 # eg. "condor_q -run"
-# 25307.0   tiago.falcao    5/2  11:51   0+00:00:20 slot1@w01.lsc.ic.unicamp.br
-# 25307.1   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n08.lsc.ic.unicamp.br
-# 25307.2   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n02.lsc.ic.unicamp.br
-# 25307.3   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n04.lsc.ic.unicamp.br
-# 25307.4   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n11.lsc.ic.unicamp.br
-# 25307.5   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n16.lsc.ic.unicamp.br
-# 25307.6   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n17.lsc.ic.unicamp.br
-# 25307.7   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n06.lsc.ic.unicamp.br
-# 25307.8   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n07.lsc.ic.unicamp.br
-# 25307.9   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n13.lsc.ic.unicamp.br
-# OR
 # 25308.0   tiago.falcao    5/2  11:55   0+00:00:02 slot1@n02.lsc.ic.unicamp.br
 # 25308.1   tiago.falcao    5/2  11:55   0+00:00:02 slot1@n04.lsc.ic.unicamp.br
 # 25308.2   tiago.falcao    5/2  11:55   0+00:00:02 slot1_1@n01.lsc.ic.unicamp.br
@@ -78,17 +67,6 @@ transfer_input_files = ./bla
 # requirements          = (Target.CAN_RUN_WHOLE_MACHINE =?= True) && $(requirements)
 
 # eg. "condor_q -run"
-# 25307.0   tiago.falcao    5/2  11:51   0+00:00:20 slot1@w01.lsc.ic.unicamp.br
-# 25307.1   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n08.lsc.ic.unicamp.br
-# 25307.2   tiago.falcao    5/2  11:51   0+00:00:20 slot1@n02.lsc.ic.unicamp.br
-# 25307.3   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n04.lsc.ic.unicamp.br
-# 25307.4   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n11.lsc.ic.unicamp.br
-# 25307.5   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n16.lsc.ic.unicamp.br
-# 25307.6   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n17.lsc.ic.unicamp.br
-# 25307.7   tiago.falcao    5/2  11:51   0+00:00:19 slot1@n06.lsc.ic.unicamp.br
-# 25307.8   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n07.lsc.ic.unicamp.br
-# 25307.9   tiago.falcao    5/2  11:51   0+00:00:18 slot1@n13.lsc.ic.unicamp.br
-# OR
 # 25310.0   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n02.lsc.ic.unicamp.br
 # 25310.1   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n04.lsc.ic.unicamp.br
 # 25310.2   tiago.falcao    5/2  12:07   0+00:00:12 slot2@n01.lsc.ic.unicamp.br
@@ -110,10 +88,13 @@ periodic_release = HoldReasonCode =?= 26 && HoldReasonSubCode =?= 1
 # Request 256 MB ram unless MemoryUsage (from a previous run) is
 # already defined, in which case triple it for the next try.
 
-request_memory = ifthenelse(isUndefined(MemoryUsage),256,3*MemoryUsage)
+request_memory = ifthenelse(isUndefined(MemoryUsage), 256, 3*MemoryUsage)
+
+# To simple request of 1024 MB ram
+# request_memory = 1024
 
 ##########################################################################
-# Disk space is in KBs
+# Disk space is in KBs 
 
 request_disk = 1000000
 
